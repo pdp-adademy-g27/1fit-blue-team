@@ -22,9 +22,7 @@ import java.util.UUID;
 public class Course {
     @Id
     private UUID id;
-    @OneToOne
-    @JoinColumn(name = "reviewId")
-    private Review review;
+    private UUID gymId;
     private String name;
     private String description;
     private UUID trainerId;
@@ -33,19 +31,15 @@ public class Course {
     private CourseType courseType;
     private String contactPhone;
     @OneToOne
-    @JoinColumn(name = "trainerId")
+    @JoinColumn(name = "trainerId", insertable=false, updatable=false)
     private User trainer;
     @ManyToOne
     @JoinColumn(name = "gymId", insertable = false, updatable = false)
     private Gym gym;
-    private UUID reviewId;
     @OneToMany(mappedBy = "course")
     private List<CourseRating> courseRatings;
     @OneToMany(mappedBy = "course")
     private List<CourseRestrictions> courseRestrictions = new ArrayList<>();
-    @OneToOne
-    @JoinColumn(name = "reviewId")
-    private CourseRating courseRating;
     @OneToMany(mappedBy = "course")
-    private List<Review> reviews = new ArrayList<>();
+    private List<Review> reviews;
 }

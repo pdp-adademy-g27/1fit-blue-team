@@ -1,9 +1,7 @@
 package com.example.onefit.gym.entity;
 
-import com.example.onefit.category.entity.Category;
 import com.example.onefit.category.entity.CategoryGym;
 import com.example.onefit.feature.entity.GymFeature;
-import com.example.onefit.review.entity.Review;
 import com.example.onefit.role.gym.entity.GymRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

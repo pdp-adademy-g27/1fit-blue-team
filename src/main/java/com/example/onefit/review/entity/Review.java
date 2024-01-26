@@ -20,6 +20,7 @@ public class Review {
     @Id
     private UUID id;
     private UUID userId;
+    private UUID courseId;
     private int cleanliness;
     private int equipment;
     private int staff;
@@ -29,8 +30,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "courseId", insertable = false, updatable = false)
     private Course course;
-    @OneToOne(mappedBy = "review")
-    private Gym gym;
     @ManyToOne
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;

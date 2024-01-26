@@ -12,12 +12,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "friend")
+@Table(name = "`friend`")
 public class Friend {
     @Id
-    private UUID userId;
     private UUID friendId;
+    private UUID userId;
     @ManyToOne
-    @JoinColumn(name="userId")
+    @JoinColumn(name="userId", insertable=false, updatable=false)
     private User user;
 }

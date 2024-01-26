@@ -22,10 +22,8 @@ public class CourseRating {
     private int userMark;
     private String description;
     private double avgMark;
-    @OneToOne(mappedBy = "courseRating")
-    private Course courseRating;
     @ManyToOne
-    @JoinColumn(name="courseId")
+    @JoinColumn(name="courseId", insertable = false, updatable = false)
     private Course course;
     @ManyToOne
     @JoinColumn(name = "userId", insertable = false, updatable = false)
