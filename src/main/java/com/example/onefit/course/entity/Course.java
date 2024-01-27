@@ -23,7 +23,7 @@ public class Course {
     private UUID id;
     private String name;
     private String description;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(referencedColumnName = "id", name = "trainer_id")
     private User trainer;
     private LocalDate startDate;
@@ -36,7 +36,6 @@ public class Course {
     private Gym gym;
     @ManyToMany
     private List<Restrictions> restrictions;
-    @JoinColumn(name = "review_id")
-    @OneToMany
+    @OneToMany(mappedBy = "course")
     private List<Review> reviews;
 }

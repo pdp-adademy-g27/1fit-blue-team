@@ -1,7 +1,6 @@
 package com.example.onefit.review.entity;
 
 import com.example.onefit.course.entity.Course;
-import com.example.onefit.gym.entity.Gym;
 import com.example.onefit.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,14 +18,14 @@ import java.util.UUID;
 public class Review {
     @Id
     private UUID id;
-    @ManyToOne
-    private User user;
-
     private double cleanliness;
     private double staff;
     private double equipment;
     private double service;
     private String comment;
+    @ManyToOne
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    private User user;
     private LocalDateTime publishedAt;
     @ManyToOne
     private Course course;

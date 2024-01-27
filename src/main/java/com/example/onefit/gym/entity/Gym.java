@@ -3,7 +3,6 @@ package com.example.onefit.gym.entity;
 import com.example.onefit.category.entity.Category;
 import com.example.onefit.course.entity.Course;
 import com.example.onefit.feature.entity.Feature;
-import com.example.onefit.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
