@@ -1,8 +1,21 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/1fit
     username: postgres
-    password: postgres
-  jpa.show-sql: true
-
+    password: 5825
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 8248212293-skd2eqa7i52i0i7fl62h23h1laompvi4.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
 

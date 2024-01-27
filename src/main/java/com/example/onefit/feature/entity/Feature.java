@@ -22,6 +22,4 @@ public class Feature {
     private UUID id;
     private String name;
     private String description;
-    @OneToMany(mappedBy = "feature")
-    private List<GymFeature> gymFeatures = new ArrayList<>();
 }

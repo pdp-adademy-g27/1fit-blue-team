@@ -19,19 +19,15 @@ import java.util.UUID;
 public class Review {
     @Id
     private UUID id;
-    private UUID userId;
-    private int cleanliness;
-    private int equipment;
-    private int staff;
-    private int service;
+    @ManyToOne
+    private User user;
+
+    private double cleanliness;
+    private double staff;
+    private double equipment;
+    private double service;
     private String comment;
     private LocalDateTime publishedAt;
     @ManyToOne
-    @JoinColumn(name = "courseId", insertable = false, updatable = false)
     private Course course;
-    @OneToOne(mappedBy = "review")
-    private Gym gym;
-    @ManyToOne
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private User user;
 }

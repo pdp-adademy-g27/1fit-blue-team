@@ -1,32 +1,37 @@
 package com.example.onefit.gym.entity;
 
 import com.example.onefit.category.entity.Category;
-import com.example.onefit.category.entity.CategoryGym;
-import com.example.onefit.feature.entity.GymFeature;
+import com.example.onefit.course.entity.Course;
+import com.example.onefit.feature.entity.Feature;
 import com.example.onefit.review.entity.Review;
-import com.example.onefit.role.gym.entity.GymRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "`gym`")
 public class Gym {
     @Id
     private UUID id;
+    private String name;
+    private String description;
+
+    @ManyToMany
+    @JoinTable(
+            name = "gym_category",
+            joinColumns = {@JoinColumn(name = "gym_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
+    private List<Category> categories;
 
     @OneToMany(mappedBy = "gym")
-    private Set<GymRole> gymRoles = new HashSet<>();
+    private List<Course> courses;
 
-    @OneToMany(mappedBy = "gym")
-    private List<GymFeature> gymFeatures = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "gym")
-    private List<CategoryGym> categoryGyms = new ArrayList<>();
+    @ManyToMany
+    private List<Feature> features;
 }

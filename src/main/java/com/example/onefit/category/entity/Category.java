@@ -1,11 +1,10 @@
 package com.example.onefit.category.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.example.onefit.gym.entity.Gym;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +14,11 @@ public class Category {
     @Id
     private UUID id;
     private String name;
-    @OneToMany(mappedBy = "category")
-    private List<CategoryGym> categoryGyms = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Category parent;
+    @ManyToMany(mappedBy = "categories")
+    private List<Gym> gyms;
+    @OneToMany
+    private List<Category> children;
 }

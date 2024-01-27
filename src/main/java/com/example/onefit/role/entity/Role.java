@@ -1,16 +1,12 @@
 package com.example.onefit.role.entity;
 
-import com.example.onefit.role.gym.entity.GymRole;
-import com.example.onefit.user.role.entity.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.example.onefit.gym.entity.Gym;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 @Data
@@ -20,11 +16,17 @@ import java.util.UUID;
 @Table(name = "`role`")
 public class Role {
     @Id
-    private UUID roleId;
+    private UUID id;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "gym_id", referencedColumnName = "id")
+    private Gym gym;
 
-    @OneToMany(mappedBy = "role")
-    private Set<UserRole> userRoles = new HashSet<>();
-
-    @OneToMany(mappedBy = "role")
-    private Set<GymRole> gymRoles = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "role_permission",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private Set<Permission> permissions;
 }
