@@ -17,6 +17,7 @@ public class Friend {
     @Id
     private UUID friendId;
     private UUID userId;
+
     @ManyToOne
     @JoinColumn(name="userId", insertable=false, updatable=false)
     private User user;
