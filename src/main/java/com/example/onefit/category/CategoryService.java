@@ -53,14 +53,14 @@ public class CategoryService extends GenericService <Category, UUID, CategoryRes
         repository.delete(existingCategory);
     }
 
-    protected CategoryResponseDto internalGet(UUID uuid) {
+    public CategoryResponseDto getById(UUID uuid) {
         Category existingCategory = repository.findById(uuid)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + uuid));
 
         return mapper.toResponseDto(existingCategory);
     }
 
-    protected List<CategoryResponseDto> internalGetAll() {
+    protected List<CategoryResponseDto> getAll() {
         List<Category> categories = repository.findAll();
         return categories.stream()
                 .map(mapper::toResponseDto)
