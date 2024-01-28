@@ -2,12 +2,18 @@ package com.example.onefit.category.entity;
 
 import com.example.onefit.gym.entity.Gym;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "category")
 public class Category {
