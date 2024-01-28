@@ -19,6 +19,8 @@ public class Gym {
     private UUID id;
     private String name;
     private String description;
+    @Column(nullable = false)
+    private String address;
 
     @ManyToMany
     @JoinTable(

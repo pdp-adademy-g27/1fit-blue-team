@@ -19,6 +19,6 @@ public class Category {
     private Category parent;
     @ManyToMany(mappedBy = "categories")
     private List<Gym> gyms;
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Category> children;
 }

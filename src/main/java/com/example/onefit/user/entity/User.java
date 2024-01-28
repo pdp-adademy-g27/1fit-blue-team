@@ -31,4 +31,6 @@ public class User {
     private List<User> friends;
     @ManyToMany
     private List<Role> roles;
+
+
 }
