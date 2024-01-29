@@ -1,15 +1,16 @@
 package com.example.onefit.course.entity;
 
+import com.example.onefit.category.entity.Category;
 import com.example.onefit.gym.entity.Gym;
+import com.example.onefit.restrictions.entity.Restrictions;
+import com.example.onefit.review.entity.Review;
 import com.example.onefit.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.onefit.review.entity.Review;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,24 +22,41 @@ import java.util.UUID;
 public class Course {
     @Id
     private UUID id;
-    private UUID gymId;
+
     private String name;
+
     private String description;
-    private UUID trainerId;
-    private LocalDateTime startDate;
-    private int durationTime;
-    private CourseType courseType;
-    private String contactPhone;
+
     @OneToOne
-    @JoinColumn(name = "trainerId", insertable=false, updatable=false)
+    @JoinColumn(referencedColumnName = "id", name = "trainer_id")
     private User trainer;
+
+    private LocalDate startDate;
+
+    private int durationTime;
+
+    @Enumerated(EnumType.STRING)
+    private CourseType courseType;
+
+    private String contactPhone;
+
+    @ManyToMany
+    @JoinTable(name = "user_course",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private List<User> registeredUsers;
+
     @ManyToOne
-    @JoinColumn(name = "gymId", insertable = false, updatable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Category category;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "gym_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Gym gym;
-    @OneToMany(mappedBy = "course")
-    private List<CourseRating> courseRatings;
-    @OneToMany(mappedBy = "course")
-    private List<CourseRestrictions> courseRestrictions = new ArrayList<>();
+
+    @ManyToMany
+    private List<Restrictions> restrictions;
+
     @OneToMany(mappedBy = "course")
     private List<Review> reviews;
 }
