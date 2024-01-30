@@ -2,6 +2,7 @@ package com.example.onefit.course.entity;
 
 import com.example.onefit.category.entity.Category;
 import com.example.onefit.gym.entity.Gym;
+import com.example.onefit.image.entity.Image;
 import com.example.onefit.restrictions.entity.Restrictions;
 import com.example.onefit.review.entity.Review;
 import com.example.onefit.user.entity.User;
@@ -18,7 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "`course`")
 public class Course {
     @Id
     private UUID id;
@@ -59,4 +59,7 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Review> reviews;
+
+    @ManyToOne
+    private Image image;
 }

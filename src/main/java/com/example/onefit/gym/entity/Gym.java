@@ -3,6 +3,7 @@ package com.example.onefit.gym.entity;
 import com.example.onefit.category.entity.Category;
 import com.example.onefit.course.entity.Course;
 import com.example.onefit.feature.entity.Feature;
+import com.example.onefit.image.entity.Image;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,4 +36,7 @@ public class Gym {
 
     @ManyToMany
     private List<Feature> features;
+
+    @ManyToOne
+    private Image image;
 }

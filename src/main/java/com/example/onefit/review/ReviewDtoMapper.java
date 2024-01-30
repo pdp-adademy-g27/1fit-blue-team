@@ -35,5 +35,6 @@ public class ReviewDtoMapper extends GenericMapper<Review, ReviewCreateDto, Revi
     @Override
     public void toEntity(ReviewUpdateDto reviewUpdateDto, Review review) {
         modelMapper.map(reviewUpdateDto, review);
+        review.setChanged(true);
     }
 }
