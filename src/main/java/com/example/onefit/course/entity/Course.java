@@ -1,5 +1,6 @@
 package com.example.onefit.course.entity;
 
+import com.example.onefit.category.entity.Category;
 import com.example.onefit.gym.entity.Gym;
 import com.example.onefit.restrictions.entity.Restrictions;
 import com.example.onefit.review.entity.Review;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,10 +34,14 @@ public class Course {
     private CourseType courseType;
     private String contactPhone;
     @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Category category;
+    @ManyToOne
     @JoinColumn(name = "gym_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Gym gym;
     @ManyToMany
     private List<Restrictions> restrictions;
     @OneToMany(mappedBy = "course")
     private List<Review> reviews;
+    private LocalDateTime created;
 }
