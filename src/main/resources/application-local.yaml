@@ -2,6 +2,32 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: 2201
-  jpa.show-sql: true
+    password: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 8248212293-skd2eqa7i52i0i7fl62h23h1laompvi4.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
 
+oneFit:
+  otp:
+    retry-wait-time: 5 # in seconds
+    retry-count: 3
+    time-to-live: 60 # in seconds
+  notification:
+    sms:
+      eskiz: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkxOTk3MDksImlhdCI6MTcwNjYwNzcwOSwicm9sZSI6InRlc3QiLCJzaWduIjoiNDdiNGU3YmYyZWJmNTRmYTBhNDBhODU4NjBmOTg3ZjgyZTZlMGQ5NjFiMjFmZmM2Yzc1MTlmNmFjNDIxZTc5MyIsInN1YiI6IjYyMTQifQ.Fkx8Iy4gnA04I5Bf0GOYK-IxvVY_Xkupj78_Y71yBKc
+  security:
+    token:
+      expiration: 86400
+      secret: QV9leUa5bTqgfO2xxlITYDnaqrpqsWM37DjVYghhlr5YC+F6LCYhUhUg8gLjx+4C
