@@ -16,4 +16,5 @@ public class GymDto {
     private String address;
     private Set<UUID> categoryIds;
     private Set<UUID> featureIds;
+    private UUID imageId;
 }

@@ -12,8 +12,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,7 @@ public class GymService extends GenericService<Gym, UUID, GymResponseDto, GymDto
     private final GymDtoMapper mapper;
 
     @Override
+    @Transactional
     protected GymResponseDto internalCreate(GymDto createDto) {
         Gym gym = mapper.toEntity(createDto);
 
@@ -38,6 +41,7 @@ public class GymService extends GenericService<Gym, UUID, GymResponseDto, GymDto
     }
 
 
+    @Transactional
     @Override
     protected GymResponseDto internalUpdate(UUID id, GymDto gymDto) {
         Gym gym = repository.findById(id).orElseThrow(EntityNotFoundException::new);
@@ -49,20 +53,24 @@ public class GymService extends GenericService<Gym, UUID, GymResponseDto, GymDto
 
 
     private void setFeatures(GymDto gymDto, Gym gym) {
-        List<Feature> features = gymDto.getFeatureIds()
-                .stream()
-                .map((fetId) -> featureRepository.findById(fetId)
-                        .orElseThrow(EntityNotFoundException::new)
-                ).collect(Collectors.toList());
-        gym.setFeatures(features);
+        if (Objects.nonNull(gymDto.getFeatureIds())) {
+            List<Feature> features = gymDto.getFeatureIds()
+                    .stream()
+                    .map((fetId) -> featureRepository.findById(fetId)
+                            .orElseThrow(EntityNotFoundException::new)
+                    ).toList();
+            gym.setFeatures(features);
+        }
     }
 
     private void setCategories(GymDto gymDto, Gym gym) {
-        List<Category> categories = gymDto.getCategoryIds()
-                .stream()
-                .map((catId) -> categoryRepository.findById(catId)
-                        .orElseThrow(EntityNotFoundException::new)
-                ).collect(Collectors.toList());
-        gym.setCategories(categories);
+        if (Objects.nonNull(gymDto.getCategoryIds())) {
+            List<Category> categories = gymDto.getCategoryIds()
+                    .stream()
+                    .map((catId) -> categoryRepository.findById(catId)
+                            .orElseThrow(EntityNotFoundException::new)
+                    ).collect(Collectors.toList());
+            gym.setCategories(categories);
+        }
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(AppConstants.BASE_PATH + GymController.BASE_URL)
+@RequestMapping(GymController.BASE_URL)
 @RequiredArgsConstructor
 public class GymController {
     public static final String BASE_URL = "/gym";

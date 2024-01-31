@@ -12,6 +12,7 @@ import lombok.Getter;
 import com.example.onefit.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class ReviewService extends GenericService<Review, UUID, ReviewResponseDt
     private final ReviewDtoMapper mapper;
 
     @Override
+    @Transactional
     protected ReviewResponseDto internalCreate(ReviewCreateDto createDto) {
         Review review = mapper.toEntity(createDto);
         setAuthor(createDto, review);
@@ -34,6 +36,7 @@ public class ReviewService extends GenericService<Review, UUID, ReviewResponseDt
     }
 
     @Override
+    @Transactional
     protected ReviewResponseDto internalUpdate(UUID id, ReviewUpdateDto updateDto) {
         Review review = repository.findById(id).orElseThrow(EntityNotFoundException::new);
         mapper.toEntity(updateDto, review);
