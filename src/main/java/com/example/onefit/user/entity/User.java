@@ -1,5 +1,6 @@
 package com.example.onefit.user.entity;
 
+import com.example.onefit.image.entity.Image;
 import com.example.onefit.role.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private LocalDateTime dateOfBirth;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     @ManyToMany
     @JoinTable(name = "user_friend", joinColumns = @JoinColumn(name = "user_id"),
@@ -38,6 +40,7 @@ public class User implements UserDetails {
     private List<User> friends;
     @ManyToMany
     private List<Role> roles;
+
     @CreatedDate
     private LocalDateTime created;
 
@@ -73,4 +76,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @ManyToOne
+    private Image image;
 }

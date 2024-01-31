@@ -1,24 +1,20 @@
-package com.example.onefit.feature.entity;
+package com.example.onefit.gym.dto;
 
 import com.example.onefit.image.entity.Image;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Feature {
-    @Id
+@AllArgsConstructor
+public class GymResponseDto {
     private UUID id;
     private String name;
     private String description;
-    @ManyToOne
+    private String address;
     private Image image;
+    // todo Add the rest of the fields when needed DTOs are created
 }
