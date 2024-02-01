@@ -36,9 +36,5 @@ public class Course {
     @JoinColumn(name = "gymId", insertable = false, updatable = false)
     private Gym gym;
     @OneToMany(mappedBy = "course")
-    private List<CourseRating> courseRatings;
-    @OneToMany(mappedBy = "course")
-    private List<CourseRestrictions> courseRestrictions = new ArrayList<>();
-    @OneToMany(mappedBy = "course")
     private List<Review> reviews;
 }
