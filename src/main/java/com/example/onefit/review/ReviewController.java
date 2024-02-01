@@ -35,7 +35,9 @@ public class ReviewController {
         return ResponseEntity.ok(service.get(id));
     }
 
-    //todo Find all reviews which belong to one course/gym
+    public ResponseEntity<Page<ReviewResponseDto>> getAll(@RequestParam(required = false) String predicate, Pageable pageable) {
+        return ResponseEntity.ok(service.getAll(predicate,pageable));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {

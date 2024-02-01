@@ -2,6 +2,7 @@ package com.example.onefit.user.entity;
 
 import com.example.onefit.image.entity.Image;
 import com.example.onefit.role.entity.Role;
+import com.example.onefit.subscription.entity.Subscription;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,6 +48,14 @@ public class User implements UserDetails {
     @LastModifiedDate
     private LocalDateTime updated;
 
+    @ManyToOne
+    private Image image;
+
+    @ManyToOne
+    private Subscription subscription;
+
+    private LocalDateTime activationDate;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -77,6 +86,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    @ManyToOne
-    private Image image;
 }

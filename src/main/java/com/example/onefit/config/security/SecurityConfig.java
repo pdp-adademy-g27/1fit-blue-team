@@ -28,6 +28,9 @@ public class SecurityConfig {
         return http
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling((exceptionHandlingConfigurer -> {
+                    exceptionHandlingConfigurer.authenticationEntryPoint(authEntryPoint);
+                }))
                 .oauth2Login((oauth2) -> {
                     oauth2
                             .userInfoEndpoint(userInfoEndpointConfig -> {

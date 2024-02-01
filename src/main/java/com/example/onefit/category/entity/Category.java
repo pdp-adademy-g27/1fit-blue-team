@@ -1,6 +1,7 @@
 package com.example.onefit.category.entity;
 
 import com.example.onefit.gym.entity.Gym;
+import com.example.onefit.image.entity.Image;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category")
 public class Category {
     @Id
     private UUID id;
@@ -27,4 +27,6 @@ public class Category {
     private List<Gym> gyms;
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Category> children;
+    @ManyToOne
+    private Image image;
 }
