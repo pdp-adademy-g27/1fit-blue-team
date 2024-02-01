@@ -2,7 +2,7 @@ package com.example.onefit.image;
 
 import com.example.onefit.common.AppConstants;
 import com.example.onefit.image.entity.Image;
-import com.example.onefit.user.UserRepository;
+import com.example.onefit.user.repository.UserRepository;
 import com.example.onefit.user.entity.User;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;

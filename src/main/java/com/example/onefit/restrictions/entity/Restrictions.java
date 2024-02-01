@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "`restrictions`")
 public class Restrictions {
     @Id
     private UUID id;

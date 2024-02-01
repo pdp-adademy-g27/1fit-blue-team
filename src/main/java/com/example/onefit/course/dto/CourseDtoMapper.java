@@ -19,6 +19,7 @@ public class CourseDtoMapper extends GenericMapper<Course, CourseCreateDto, Cour
     @Override
     public CourseResponseDto toResponseDto(Course course) {
         CourseResponseDto responseDto = modelMapper.map(course, CourseResponseDto.class);
+        responseDto.setTrainerId(course.getTrainer().getId());
         return responseDto;
     }
 

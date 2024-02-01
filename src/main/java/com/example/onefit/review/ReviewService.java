@@ -1,12 +1,12 @@
 package com.example.onefit.review;
 import com.example.onefit.common.service.GenericService;
-import com.example.onefit.course.CourseRepository;
+import com.example.onefit.course.repository.CourseRepository;
 import com.example.onefit.course.entity.Course;
 import com.example.onefit.review.dto.ReviewCreateDto;
 import com.example.onefit.review.dto.ReviewResponseDto;
 import com.example.onefit.review.dto.ReviewUpdateDto;
 import com.example.onefit.review.entity.Review;
-import com.example.onefit.user.UserRepository;
+import com.example.onefit.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import com.example.onefit.user.entity.User;
