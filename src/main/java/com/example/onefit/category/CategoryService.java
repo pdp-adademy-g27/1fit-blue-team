@@ -10,9 +10,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 
 @Service
 @Getter
@@ -46,7 +46,7 @@ public class CategoryService extends GenericService <Category, UUID, CategoryRes
         return mapper.toResponseDto(updatedCategory);
     }
 
-    protected void internalDelete(UUID uuid) {
+    public void delete(UUID uuid) {
         Category existingCategory = repository.findById(uuid)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + uuid));
 
@@ -60,12 +60,6 @@ public class CategoryService extends GenericService <Category, UUID, CategoryRes
         return mapper.toResponseDto(existingCategory);
     }
 
-    protected List<CategoryResponseDto> getAll() {
-        List<Category> categories = repository.findAll();
-        return categories.stream()
-                .map(mapper::toResponseDto)
-                .collect(Collectors.toList());
-    }
 
 
 }

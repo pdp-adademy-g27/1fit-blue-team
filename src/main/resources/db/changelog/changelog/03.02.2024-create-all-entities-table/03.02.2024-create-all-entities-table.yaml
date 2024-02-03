@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+        id: drop-user-table
+        author: dr.qimmatoy@gmail.com
+        changes:
+          - sqlFile:
+              path: 03.02.2024-drop-user-table.sql
+              relativeToChangelogFile: true
+  - changeSet:
+      id: create-image-restriction-subscription-table
+      author: dr.qimmatoy@gmail.com
+      changes:
+        - sqlFile:
+            path: 03.02.2024-create-image-subscription-restrictions-table.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: create-gym-feature-category-table
+      author: dr.qimmatoy@gmail.com
+      changes:
+        - sqlFile:
+            path: 03.02.2024-create-gym-feature-category-table.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: create-user-table
+      author: dr.qimmatoy@gmail.com
+      changes:
+        - sqlFile:
+            path: 03.02.2024-create-user-table.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: create-role-permission-user_roles-table
+      author: dr.qimmatoy@gmail.com
+      changes:
+        - sqlFile:
+            path: 03.02.2024-create-role-permission-user_roles-table.sql
+            relativeToChangelogFile: true
