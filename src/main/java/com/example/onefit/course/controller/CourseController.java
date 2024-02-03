@@ -1,5 +1,6 @@
 package com.example.onefit.course.controller;
 
+import com.example.onefit.common.AppConstants;
 import com.example.onefit.course.dto.CourseCreateDto;
 import com.example.onefit.course.dto.CourseResponseDto;
 import com.example.onefit.course.dto.CourseUpdateDto;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @Controller
+@RequestMapping(AppConstants.BASE_PATH + CourseController.BASE_URL)
 @RequiredArgsConstructor
 public class CourseController {
+    public static final String BASE_URL = "/course";
     private final CourseService courseService;
 
     @PostMapping("/course/create")

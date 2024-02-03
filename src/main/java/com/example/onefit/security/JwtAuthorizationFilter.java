@@ -27,24 +27,23 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (bearer == null || !bearer.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+        if (bearer != null && bearer.startsWith("Bearer ")) {
+            String token = bearer.substring(7);
+
+            Claims claims = jwtService.claims(token);
+            String phoneNumber = claims.getSubject();
+
+            User user = userRepository
+                    .findByPhoneNumber(phoneNumber)
+                    .orElseThrow(() -> new EntityNotFoundException(String.format("User with phone number %s not found", phoneNumber)));
+
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
         }
 
-        String token = bearer.substring(7);
-
-        Claims claims = jwtService.claims(token);
-        String phoneNumber = claims.getSubject();
-
-        User user = userRepository
-                .findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("User with phone number %s not found", phoneNumber)));
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
     }
 }

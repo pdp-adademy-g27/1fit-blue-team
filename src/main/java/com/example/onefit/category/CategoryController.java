@@ -3,6 +3,7 @@ package com.example.onefit.category;
 import com.example.onefit.category.dto.CategoryCreateDto;
 import com.example.onefit.category.dto.CategoryResponseDto;
 import com.example.onefit.category.dto.CategoryUpdateDto;
+import com.example.onefit.common.AppConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping(AppConstants.BASE_PATH + CategoryController.BASE_URL)
 @RequiredArgsConstructor
 public class CategoryController {
+    public static final String BASE_URL = "/category";
     private final CategoryService categoryService;
 
     @PostMapping("/create")

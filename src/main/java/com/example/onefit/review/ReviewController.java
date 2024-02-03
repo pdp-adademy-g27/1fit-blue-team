@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(ReviewController.BASE_URL)
+@RequestMapping(AppConstants.BASE_PATH + ReviewController.BASE_URL)
 @RequiredArgsConstructor
 public class ReviewController {
     public static final String BASE_URL = "/review";

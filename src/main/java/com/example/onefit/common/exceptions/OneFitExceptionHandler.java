@@ -25,6 +25,8 @@ public class OneFitExceptionHandler {
         return ResponseEntity.status(403).body(new ErrorData(e.getMessage()));
     }
 
+
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleException(EntityNotFoundException e) {
         return ResponseEntity.badRequest().body(new ErrorData(400, e.getMessage()));
