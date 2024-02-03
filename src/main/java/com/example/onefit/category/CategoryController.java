@@ -6,11 +6,13 @@ import com.example.onefit.category.dto.CategoryUpdateDto;
 import com.example.onefit.common.AppConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 import java.util.UUID;
 
 @RestController
@@ -27,6 +29,7 @@ public class CategoryController {
                 .status(HttpStatus.CREATED)
                 .body(categoryResponseDto);
     }
+
     @PutMapping("/update/{uuid}")
     public ResponseEntity<CategoryResponseDto> update(
             @PathVariable UUID uuid,
@@ -48,19 +51,23 @@ public class CategoryController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<CategoryResponseDto> getById(@PathVariable UUID uuid) {
-        CategoryResponseDto categoryResponseDto = categoryService.get(uuid);
+    public ResponseEntity<CategoryResponseDto> get(@PathVariable UUID uuid) {
+        CategoryResponseDto categoryResponseDto = categoryService.getById(uuid);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(categoryResponseDto);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<CategoryResponseDto>> getAll() {
-        List<CategoryResponseDto> categoryList = categoryService.getAll();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(categoryList);
+    @GetMapping
+    public ResponseEntity<Page<CategoryResponseDto>> getAll(
+            @RequestParam(required = false)
+            String predicate,
+            Pageable pageable) {
+        Page<CategoryResponseDto> categoryResponseDto = categoryService.getAll(predicate, pageable);
+        return ResponseEntity.ok(categoryResponseDto);
+
     }
+
+
 
 }
