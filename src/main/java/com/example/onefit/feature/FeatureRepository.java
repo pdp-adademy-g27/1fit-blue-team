@@ -7,5 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
+=======
+
+import java.util.UUID;
+
 public interface FeatureRepository extends GenericRepository<Feature, UUID> {
 }

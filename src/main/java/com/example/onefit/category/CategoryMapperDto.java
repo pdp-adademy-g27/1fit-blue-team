@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +25,10 @@ public class CategoryMapperDto extends GenericMapper<Category, CategoryCreateDto
 
     @Override
     public CategoryResponseDto toResponseDto(Category category) {
-        return modelMapper.map(category, CategoryResponseDto.class);
+        CategoryResponseDto responseDto = modelMapper.map(category, CategoryResponseDto.class);
+        if (Objects.nonNull(category.getParent()))
+            responseDto.setParentId(category.getParent().getId());
+        return responseDto;
     }
 
     @Override

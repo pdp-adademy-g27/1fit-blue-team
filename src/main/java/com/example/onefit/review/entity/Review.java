@@ -14,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "`review`")
 public class Review {
     @Id
     private UUID id;
@@ -24,9 +23,10 @@ public class Review {
     private double service;
     private String comment;
     @ManyToOne
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private User user;
+    @JoinColumn(name = "userId", updatable = false)
+    private User author;
+    private boolean isChanged;
     private LocalDateTime publishedAt;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Course course;
 }
