@@ -2,6 +2,7 @@ package com.example.onefit.user.entity;
 
 import com.example.onefit.image.entity.Image;
 import com.example.onefit.role.entity.Role;
+import com.example.onefit.role.permission.entity.Permission;
 import com.example.onefit.subscription.entity.Subscription;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @AllArgsConstructor
@@ -58,9 +59,15 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if (Objects.nonNull(roles)) {
+            Stream<Permission> rolePermissionStream = roles.stream()
+                    .map(Role::getPermissions)
+                    .flatMap(Collection::stream);
+            Stream<GrantedAuthority> roleAndPermissionStream = Stream.concat(rolePermissionStream, roles.stream());
+            return roleAndPermissionStream.collect(Collectors.toSet());
+        }
+        return new ArrayList<>();
     }
-
     @Override
     public String getUsername() {
         return phoneNumber;

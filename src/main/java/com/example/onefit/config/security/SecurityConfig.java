@@ -20,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final Oauth2SuccessHandler oauth2SuccessHandler;
+    private final Oauth2UserService oauth2UserService;
     private final AuthEntryPoint authEntryPoint;
     private final JwtAuthorizationFilter authorizationFilter;
 
@@ -37,7 +39,7 @@ public class SecurityConfig {
                     oauth2
                             .userInfoEndpoint(userInfoEndpointConfig -> {
                                 userInfoEndpointConfig
-                                        .userService(new DefaultOAuth2UserService());
+                                        .userService(oauth2UserService);
                             })
                             .authorizationEndpoint(authorizationEndpointConfig -> {
                                 authorizationEndpointConfig
@@ -45,11 +47,10 @@ public class SecurityConfig {
                                         .authorizationRequestRepository(new HttpSessionOAuth2AuthorizationRequestRepository());
                             })
                             .redirectionEndpoint(redirectionEndpointConfig -> {
-
                                 redirectionEndpointConfig.baseUri("/oauth2/callback/*");
                             })
                             .failureHandler(new AuthenticationEntryPointFailureHandler(authEntryPoint))
-                            .successHandler(new ForwardAuthenticationSuccessHandler("/main-page"));
+                            .successHandler(oauth2SuccessHandler);
                 })
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
