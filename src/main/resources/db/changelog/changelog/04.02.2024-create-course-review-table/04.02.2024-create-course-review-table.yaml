@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-image-course-review-table
+      author: dr.qimmatoy@gmail.com
+      changes:
+        - sqlFile:
+            path: 04.02.2024-create-image-course-review-table.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: create-course_restriction-user_course-friend-user_friend-table
+      author: dr.qimmatoy@gmail.com
+      changes:
+        - sqlFile:
+            path: 04.02.2024-create-course_restriction-user_course-friend-user_friend-table.sql
+            relativeToChangelogFile: true
