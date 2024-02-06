@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(ImageController.BASE_URL)
+@RequestMapping(AppConstants.BASE_PATH + ImageController.BASE_URL)
 @RequiredArgsConstructor
 public class ImageController {
     public static final String BASE_URL = "/image";

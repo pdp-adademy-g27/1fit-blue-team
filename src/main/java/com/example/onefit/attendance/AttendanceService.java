@@ -8,8 +8,10 @@ import com.example.onefit.user.entity.User;
 import com.example.onefit.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.util.Objects;
@@ -22,8 +24,8 @@ public class AttendanceService {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
 
-    public void attend(UUID userId, UUID courseId) {
-        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+    public void attend(UUID courseId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (Objects.isNull(user.getSubscription()))
             throw ApiException.throwException("This user has no subscription");
@@ -35,5 +37,16 @@ public class AttendanceService {
         Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
         Attendance attendance = new Attendance(user, course, LocalDateTime.now());
         attendanceRepository.save(attendance);
+    }
+
+    public void cancel(UUID courseId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
+
+        if (course.getStartDate().isBefore(LocalDateTime.now()))
+            throw ApiException.throwException("The course has already been started");
+
+        attendanceRepository.deleteByUserAndCourse(user, course);
     }
 }

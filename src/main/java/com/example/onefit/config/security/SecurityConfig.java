@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -21,21 +20,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final Oauth2SuccessHandler oauth2SuccessHandler;
+    private final Oauth2UserService oauth2UserService;
     private final AuthEntryPoint authEntryPoint;
+    private final JwtAuthorizationFilter authorizationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling((exceptionHandlingConfigurer -> {
-                    exceptionHandlingConfigurer.authenticationEntryPoint(authEntryPoint);
-                }))
+                .authorizeHttpRequests(auth -> {
+                    auth
+                            .requestMatchers("/api/v1/**").authenticated()
+                            .anyRequest().permitAll();
+                })
                 .oauth2Login((oauth2) -> {
                     oauth2
                             .userInfoEndpoint(userInfoEndpointConfig -> {
                                 userInfoEndpointConfig
-                                        .userService(new DefaultOAuth2UserService());
+                                        .userService(oauth2UserService);
                             })
                             .authorizationEndpoint(authorizationEndpointConfig -> {
                                 authorizationEndpointConfig
@@ -46,27 +50,8 @@ public class SecurityConfig {
                                 redirectionEndpointConfig.baseUri("/oauth2/callback/*");
                             })
                             .failureHandler(new AuthenticationEntryPointFailureHandler(authEntryPoint))
-                            .successHandler(new ForwardAuthenticationSuccessHandler("/main-page"));
+                            .successHandler(oauth2SuccessHandler);
                 })
-                .build();
-    }
-
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, JwtAuthorizationFilter authorizationFilter) throws Exception {
-        return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        registry -> registry
-                                .requestMatchers("/user/auth/**")
-                                .permitAll()
-                                .anyRequest().authenticated()
-                )
-                .sessionManagement(
-                        session -> session
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

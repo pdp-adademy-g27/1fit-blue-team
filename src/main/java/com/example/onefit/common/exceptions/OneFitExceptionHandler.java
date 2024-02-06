@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import javax.naming.AuthenticationException;
 import java.time.LocalDateTime;
@@ -23,6 +24,11 @@ public class OneFitExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<?> handeException(AuthenticationException e) {
         return ResponseEntity.status(403).body(new ErrorData(e.getMessage()));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<?> handleException(NoResourceFoundException e) {
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

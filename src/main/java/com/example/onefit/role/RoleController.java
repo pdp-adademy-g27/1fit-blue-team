@@ -1,5 +1,6 @@
 package com.example.onefit.role;
 
+import com.example.onefit.common.AppConstants;
 import com.example.onefit.role.dto.RoleCreateDto;
 import com.example.onefit.role.dto.RoleResponseDto;
 import com.example.onefit.role.dto.RoleUpdateDto;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/role")
+@RequestMapping(AppConstants.BASE_PATH + RoleController.BASE_URL)
 @RequiredArgsConstructor
 public class RoleController {
+    public static final String BASE_URL = "/role";
     private final RoleService roleService;
 
     @PostMapping

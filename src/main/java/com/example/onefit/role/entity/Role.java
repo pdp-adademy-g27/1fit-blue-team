@@ -6,6 +6,7 @@ import com.example.onefit.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     private UUID id;
     @Column(unique = true)
@@ -37,4 +38,13 @@ public class Role {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> users;
+
+    public Set<Permission> getPermissions() {
+        return this.permissions;
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.name;
+    }
 }

@@ -8,6 +8,7 @@ import com.example.onefit.user.dto.UserSignInDto;
 import com.example.onefit.user.dto.ValidatePhoneNumberRequestDto;
 import com.example.onefit.user.otp.OtpService;
 import com.example.onefit.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +34,18 @@ public class UserController {
         return ResponseEntity.ok(commonResponse);
     }
 
+    @PostMapping("/auth/sign-up/google")
+    public ResponseEntity<UserResponseDto> signUp(HttpServletRequest request) {
+        UserCreateDto userCreateDto = (UserCreateDto) request.getSession().getAttribute("googeUser");
+        UserResponseDto userResponseDto = userService.create(userCreateDto);
+        String token = jwtService.generateToken(userResponseDto.getPhoneNumber());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .body(userResponseDto);
+    }
+
     @PostMapping("/auth/sign-up")
     public ResponseEntity<UserResponseDto> signUp(
             @RequestBody @Valid UserCreateDto userCreateDto
@@ -48,9 +61,7 @@ public class UserController {
 
 
     @PostMapping("/auth/sign-in")
-    public ResponseEntity<UserResponseDto> singIn(
-            @RequestBody @Valid UserSignInDto signInDto
-    ) {
+    public ResponseEntity<UserResponseDto> signIn(@RequestBody @Valid UserSignInDto signInDto) {
         UserResponseDto userResponseDto = userService.signIn(signInDto);
         String token = jwtService.generateToken(userResponseDto.getPhoneNumber());
 
